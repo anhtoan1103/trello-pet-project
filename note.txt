@@ -4,3 +4,12 @@ semantic versioning: version 7.7.7:
   third number: Patches: bug fix
 ~7.7.7: khi tăng version thì nó chỉ tăng số cuối
 ^7.7.7: khi tăng version thì nó chỉ tăng số thứ 2
+
+object destructuring: gán biến mà k cần biết số lượng phần tử bên trong mảng
+
+import Button from '@mui/material/Button';
+import TextField from '@mui/material/TextField'
+
+is faster than 
+
+import { Button, TextField } from '@mui/material'
