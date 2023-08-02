@@ -13,3 +13,5 @@ import TextField from '@mui/material/TextField'
 is faster than 
 
 import { Button, TextField } from '@mui/material'
+
+Nếu như theme (CreateTheme) mà để rỗng thì nó sẽ được apply giá trị mặc định.
