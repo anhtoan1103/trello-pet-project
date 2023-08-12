@@ -8,13 +8,15 @@ const theme = extendTheme({
       palette: {
         primary: teal,
         secondary: deepOrange
-      }
+      },
+      spacing: (factor) => `${0.25 * factor}rem`,
     },
     dark: {
       palette: {
         primary: cyan,
         secondary: orange
-      }
+      },
+      spacing: (factor) => `${0.25 * factor}rem`
     }
   }
 })
