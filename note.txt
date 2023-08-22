@@ -15,3 +15,5 @@ is faster than
 import { Button, TextField } from '@mui/material'
 
 Nếu như theme (CreateTheme) mà để rỗng thì nó sẽ được apply giá trị mặc định.
+
+Link design: https://app.diagrams.net/#G1nO_x4hyOpSYlTHBPXv85SpXeN_GSRftH
