@@ -6,7 +6,7 @@ function App() {
     <>
       {/** React Router Dom /boards /boards/{board_id} */}
       {/** Board details */}
-      <Board></Board>
+      <Board/>
     </>
   )
 }
