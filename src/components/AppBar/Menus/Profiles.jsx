@@ -28,7 +28,7 @@ function Profiles() {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{ width: 25, height: 25 }}/>
+        <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{ width: 34, height: 34 }}/>
       </IconButton>
       <Menu
       id="basic-menu-profiles"
@@ -40,10 +40,10 @@ function Profiles() {
       }}
       >
            <MenuItem>
-          <Avatar sx={{ width: 28, height: 28, mr: 2}} /> Profile
+          <Avatar sx={{ width: 34, height: 34, mr: 2}} /> Profile
         </MenuItem>
         <MenuItem>
-          <Avatar sx={{ width: 28, height: 28, mr: 2}} /> My account
+          <Avatar sx={{ width: 34, height: 34, mr: 2}} /> My account
         </MenuItem>
         <Divider />
         <MenuItem>
