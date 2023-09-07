@@ -8,20 +8,20 @@ const theme = extendTheme({
     boardBarHeight: '60px',
     
   },
-  // colorSchemes: {
-  //   light: {
-  //     palette: {
-  //       primary: teal,
-  //       secondary: deepOrange
-  //     },
-  //   },
-  //   dark: {
-  //     palette: {
-  //       primary: cyan,
-  //       secondary: orange
-  //     },
-  //   }
-  // },
+  colorSchemes: {
+    light: {
+      palette: {
+        primary: teal,
+        secondary: deepOrange
+      },
+    },
+    dark: {
+      palette: {
+        primary: cyan,
+        secondary: orange
+      },
+    }
+  },
   components: {
     MuiCssBaseline: {
       styleOverrides: {

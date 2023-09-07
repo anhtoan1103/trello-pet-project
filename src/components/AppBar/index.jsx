@@ -18,19 +18,21 @@ import Recent from './Menus/Recent'
 import Templates from './Menus/Templates'
 import TypoGraphy from '@mui/material/Typography'
 import Workspaces from './Menus/Workspaces'
+import LibraryAdd from '@mui/icons-material/LibraryAdd';
 
 import { ReactComponent as TrelloIcon } from '~/assets/trello-icon.svg'
 import Profiles from './Menus/Profiles';
 
 function AppBar() {
   return (
-    <Box px={2} sx={{
+    <Box sx={{
       width: '100%',
       height: (theme) => theme.trello.appBarHeight,
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'space-between',
       gap: 2,
+      paddingX: 2,
       overflowX: 'auto'
     }}>
       <Box sx={{display: 'flex', alignItems: 'center', gap: 2}}>
@@ -44,7 +46,7 @@ function AppBar() {
           <Recent/>
           <Starred/>
           <Templates/>
-          <Button variant='outlined'>Create</Button>
+          <Button variant='outlined' startIcon={<LibraryAdd/>}>Create</Button>
         </Box>
       </Box>
       <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
