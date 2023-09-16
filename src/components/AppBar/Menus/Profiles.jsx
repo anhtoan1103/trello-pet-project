@@ -1,4 +1,5 @@
 import React from 'react'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Box from '@mui/material/Box'
 import IconButton from '@mui/material/IconButton'
 import Avatar from '@mui/material/Avatar'
@@ -28,6 +29,7 @@ function Profiles() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        endIcon={<ExpandMoreIcon />}
       >
         <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" sx={{ width: 34, height: 34 }}/>
       </IconButton>
