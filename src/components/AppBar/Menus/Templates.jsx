@@ -1,4 +1,5 @@
 import React from 'react'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
@@ -31,6 +32,7 @@ function Templates() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        endIcon={<ExpandMoreIcon />}
       >
         Templates
       </Button>

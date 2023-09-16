@@ -1,5 +1,6 @@
 import React from 'react'
 import Box from '@mui/material/Box'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Button from '@mui/material/Button'
 import Menu from '@mui/material/Menu'
 import ListItemIcon from '@mui/material/ListItemIcon'
@@ -31,6 +32,7 @@ function Recent() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        endIcon={<ExpandMoreIcon />}
       >
         Recent
       </Button>

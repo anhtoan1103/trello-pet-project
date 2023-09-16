@@ -1,6 +1,7 @@
 import React from 'react'
 import Box from '@mui/material/Box'
 import Button from '@mui/material/Button'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import Menu from '@mui/material/Menu'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import MenuItem from '@mui/material/MenuItem'
@@ -31,6 +32,7 @@ function Starred() {
         aria-haspopup="true"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
+        endIcon={<ExpandMoreIcon />}
       >
         Starred
       </Button>
