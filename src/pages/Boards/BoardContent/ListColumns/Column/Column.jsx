@@ -17,8 +17,15 @@ import Tooltip from "@mui/material/Tooltip";
 import ListItemText from "@mui/material/ListItemText";
 import DragHandleIcon from "@mui/icons-material/DragHandle";
 import ListCards from "./ListCards/ListCards";
+import PropTypes from "prop-types";
+import { mapOrder } from "~/utils/sorts";
 
-function Column() {
+function Column({ column }) {
+  Column.propTypes = {
+    column: PropTypes.column,
+  };
+
+  const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, "_id");
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event) => {
@@ -59,7 +66,7 @@ function Column() {
             fontSize: "1rem",
           }}
         >
-          Column Title
+          {orderedCards?.title}
         </Typography>
         <Box>
           <Tooltip title="More options">
@@ -123,7 +130,7 @@ function Column() {
         </Box>
       </Box>
       {/* Box Columns List Card*/}
-      <ListCards></ListCards>
+      <ListCards listCards={orderedCards}></ListCards>
       {/* Box Columns Footer*/}
       <Box
         sx={{
