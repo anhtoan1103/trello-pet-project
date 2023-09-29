@@ -19,3 +19,5 @@ Nếu như theme (CreateTheme) mà để rỗng thì nó sẽ được apply gi�
 Link design: https://app.diagrams.net/#G1nO_x4hyOpSYlTHBPXv85SpXeN_GSRftH
 
 Tạo nội dung file jsx nhanh: rfce
+
+spread operator: [...array]: tách một array sang một cái mảng không còn array nữa

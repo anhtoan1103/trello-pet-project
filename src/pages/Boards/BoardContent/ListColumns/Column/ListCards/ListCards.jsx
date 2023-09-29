@@ -1,7 +1,12 @@
 import Box from "@mui/material/Box";
 import Card from "./Card/Card";
+import PropTypes from "prop-types";
 
-function ListCards() {
+function ListCards({ listCards }) {
+  ListCards.propTypes = {
+    listCards: PropTypes.listCards,
+  };
+
   return (
     <Box
       sx={{
@@ -24,11 +29,9 @@ function ListCards() {
         },
       }}
     >
-      <Card></Card>
-      <Card temporaryHideMedia></Card>
-      <Card temporaryHideMedia></Card>
-      <Card temporaryHideMedia></Card>
-      <Card temporaryHideMedia></Card>
+      {listCards?.map((card) => (
+        <Card key={card._id} card={card}></Card>
+      ))}
     </Box>
   );
 }
