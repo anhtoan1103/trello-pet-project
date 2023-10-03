@@ -5,6 +5,7 @@ import PropTypes from "prop-types";
 function ListCards({ listCards }) {
   ListCards.propTypes = {
     listCards: PropTypes.listCards,
+    card: PropTypes.func,
   };
 
   return (
