@@ -107,13 +107,22 @@ function BoardBar({ board }) {
           }}
         >
           <Tooltip title="toto">
-            <Avatar alt="toto" src="/static/images/1.jpg" />
+            <Avatar
+              alt="toto"
+              src="https://www.studytienganh.vn/upload/2021/06/105234.jpg"
+            />
           </Tooltip>
           <Tooltip title="toto">
-            <Avatar alt="toto" src="/static/images/1.jpg" />
+            <Avatar
+              alt="toto"
+              src="https://www.studytienganh.vn/upload/2021/06/105234.jpg"
+            />
           </Tooltip>
           <Tooltip title="toto">
-            <Avatar alt="toto" src="/static/images/1.jpg" />
+            <Avatar
+              alt="toto"
+              src="https://www.studytienganh.vn/upload/2021/06/105234.jpg"
+            />
           </Tooltip>
         </AvatarGroup>
       </Box>
