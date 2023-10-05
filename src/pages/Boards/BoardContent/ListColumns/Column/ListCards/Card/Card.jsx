@@ -8,9 +8,26 @@ import CardActions from "@mui/material/CardActions";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import PropTypes from "prop-types";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
 
 /* eslint-disable react/prop-types */ // TODO: upgrade to latest eslint tooling
-function Card({ temporaryHideMedia, card }) {
+function Card({ card }) {
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: card._id, data: { ...card } });
+
+  const dndKitCardStyles = {
+    // touchAction: "none", // use for sensor default in type PointerSensor
+    transform: CSS.Translate.toString(transform),
+    transition,
+    opacity: isDragging ? 0.5 : undefined,
+  };
   const shouldShowCardActions = () => {
     return (
       !!card?.memberIds.length ||
@@ -21,28 +38,13 @@ function Card({ temporaryHideMedia, card }) {
   Card.propTypes = {
     card: PropTypes.card,
   };
-  if (temporaryHideMedia) {
-    return (
-      <MuiCard
-        sx={{
-          cursor: "pointer",
-          boxShadow: "0 1px 1px rgba(0, 0, 0, 0.2)",
-          overflow: "unset",
-        }}
-      >
-        <CardContent
-          sx={{
-            p: 1.5,
-            "&:last-child": { p: 1.5 },
-          }}
-        >
-          <Typography>undefined</Typography>
-        </CardContent>
-      </MuiCard>
-    );
-  }
+
   return (
     <MuiCard
+      ref={setNodeRef}
+      style={dndKitCardStyles}
+      {...attributes}
+      {...listeners}
       sx={{
         cursor: "pointer",
         boxShadow: "0 1px 1px rgba(0, 0, 0, 0.2)",

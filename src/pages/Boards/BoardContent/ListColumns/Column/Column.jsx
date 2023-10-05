@@ -26,13 +26,22 @@ function Column({ column }) {
   Column.propTypes = {
     column: PropTypes.column,
   };
-  const { attributes, listeners, setNodeRef, transform, transition } =
-    useSortable({ id: column._id, data: { ...column } });
+  const {
+    attributes,
+    listeners,
+    setNodeRef,
+    transform,
+    transition,
+    isDragging,
+  } = useSortable({ id: column._id, data: { ...column } });
 
   const dndKitColumnStyles = {
     // touchAction: "none", // use for sensor default in type PointerSensor
     transform: CSS.Translate.toString(transform),
     transition,
+    // change height to 100% to fix incase the column height is too short
+    height: "100%",
+    opacity: isDragging ? 0.5 : undefined,
   };
 
   const orderedCards = mapOrder(column?.cards, column?.cardOrderIds, "_id");
@@ -45,12 +54,10 @@ function Column({ column }) {
     setAnchorEl(null);
   };
   return (
-    <>
+    // add div here to change the drag height to full width
+    <div ref={setNodeRef} style={dndKitColumnStyles} {...attributes}>
       <Box
-        ref={setNodeRef}
-        style={dndKitColumnStyles}
-        {...attributes}
-        {...listeners}
+        {...listeners} // define the drag zone
         sx={{
           minWidth: "300px",
           maxWidth: "300px",
@@ -162,7 +169,7 @@ function Column({ column }) {
           </Tooltip>
         </Box>
       </Box>
-    </>
+    </div>
   );
 }
 
