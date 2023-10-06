@@ -12,6 +12,7 @@ import {
   useSensors,
   DragOverlay,
   defaultDropAnimationSideEffects,
+  closestCorners,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useEffect, useState } from "react";
@@ -215,6 +216,8 @@ function BoardContent({ board }) {
   return (
     <DndContext
       sensors={sensors}
+      // this attribute will handle for case the object is too big, because the conflict between column and card
+      collisionDetection={closestCorners}
       onDragStart={handleDragStart}
       onDragOver={handleDragOver}
       onDragEnd={handleDragEnd}
