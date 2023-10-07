@@ -54,6 +54,8 @@ function BoardContent({ board }) {
   const [activeDragItemId, setActiveDragItemId] = useState(null);
   const [activeDragItemType, setActiveDragItemType] = useState(null);
   const [activeDragItemData, setActiveDragItemData] = useState(null);
+  const [oldColumnWhenDraggingCard, setOldColumnWhenDraggingCard] =
+    useState(null);
 
   useEffect(() => {
     setOrderedColumns(mapOrder(board?.columns, board?.columnOrderIds, "_id"));
@@ -75,6 +77,11 @@ function BoardContent({ board }) {
         : ACTIVE_DRAG_ITEM_TYPE.COLUMN
     );
     setActiveDragItemData(event?.active?.data?.current);
+
+    // only set oldColumn if the card is dragging
+    if (event?.active?.data?.current?.columnId) {
+      setOldColumnWhenDraggingCard(findColumnByCardId(event?.active?.id));
+    }
   };
 
   // trigger when dragging an object
@@ -171,35 +178,100 @@ function BoardContent({ board }) {
   };
 
   const handleDragEnd = (event) => {
-    console.log("handleDragEnd: ", event);
-
-    if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.CARD) {
-      console.log("Dragging Card - No action needed!");
-    }
+    // console.log("handleDragEnd: ", event);
 
     const { active, over } = event;
 
     // if over not exist (drag to wrong column) then return
     if (!active || !over) return;
 
-    // if the new pos different with the old pos, handle the drag event
-    if (active.id != over.id) {
-      // get old pos from active
-      const oldIndex = orderedColumns.findIndex((c) => c._id === active.id);
-      // get new pos from over
-      const newIndex = orderedColumns.findIndex((c) => c._id === over.id);
-      // dùng arrayMove để sắp xếp lại column ban đầu
-      const dndOrderedColumns = arrayMove(orderedColumns, oldIndex, newIndex);
-      // const dndOrderedColumnsIds = dndOrderedColumns.map((c) => c._id);
-      // console.log(dndOrderedColumns);
-      // console.log(dndOrderedColumnsIds);
+    // handle for card dragging
+    if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.CARD) {
+      // object destructuring: data: { current: activeDraggingCardData} ~ data.current = activeDraggingCardData
+      const {
+        id: activeDraggingCardId,
+        data: { current: activeDraggingCardData },
+      } = active;
+      // overCard: the object that we target to drag
+      const { id: overCardId } = over;
 
-      // update the state of the column after drag
-      setOrderedColumns(dndOrderedColumns);
+      // find two columns by cardId
+      const activeColumn = findColumnByCardId(activeDraggingCardId);
+      const overColumn = findColumnByCardId(overCardId);
+
+      // check the columns exist or not
+      if (!activeColumn || !overColumn) return;
+      console.log("oldcolumn: ", oldColumnWhenDraggingCard);
+      // check if this is two different columns
+      if (oldColumnWhenDraggingCard._id !== overColumn._id) {
+        //
+      } else {
+        // drag within the same column
+        // get old position from oldColumnWhenDraggingCard
+        const oldCardIndex = oldColumnWhenDraggingCard?.cards?.findIndex(
+          (c) => c._id === activeDragItemId
+        );
+        // get new position from overColumn
+        const newCardIndex = overColumn?.cards?.findIndex(
+          (c) => c._id === overCardId
+        );
+        // use arrayMove because we dragging within the same column, the same logic with dragging columns
+        const dndOrderedCards = arrayMove(
+          oldColumnWhenDraggingCard.cards,
+          oldCardIndex,
+          newCardIndex
+        );
+        setOrderedColumns((prevColumns) => {
+          // clone OrderedColumnState array to a new array for data handling
+          const nextColumns = cloneDeep(prevColumns);
+
+          // find the column we are dragging
+          const targetColumn = nextColumns.find(
+            (c) => c._id === overColumn._id
+          );
+
+          // update the new value for card and cardOrderIds in targetColumn
+          targetColumn.cards = dndOrderedCards;
+          targetColumn.cardOrderIds = dndOrderedCards.map((c) => c._id);
+
+          // return the new state
+          return nextColumns;
+        });
+      }
     }
+
+    // handle for column dragging
+    if (activeDragItemType === ACTIVE_DRAG_ITEM_TYPE.COLUMN) {
+      // if the new pos different with the old pos, handle the drag event
+      if (active.id != over.id) {
+        // get old pos from active
+        const oldColumnIndex = orderedColumns.findIndex(
+          (c) => c._id === active.id
+        );
+        // get new pos from over
+        const newColumnIndex = orderedColumns.findIndex(
+          (c) => c._id === over.id
+        );
+        // dùng arrayMove để sắp xếp lại column ban đầu
+        const dndOrderedColumns = arrayMove(
+          orderedColumns,
+          oldColumnIndex,
+          newColumnIndex
+        );
+        // const dndOrderedColumnsIds = dndOrderedColumns.map((c) => c._id);
+        // console.log(dndOrderedColumns);
+        // console.log(dndOrderedColumnsIds);
+
+        // update the state of the column after drag
+        setOrderedColumns(dndOrderedColumns);
+      }
+    }
+
+    // these attribute must set to null after drag
     setActiveDragItemId(null);
     setActiveDragItemType(null);
     setActiveDragItemData(null);
+    setOldColumnWhenDraggingCard(null);
   };
 
   // add animation when drop element
