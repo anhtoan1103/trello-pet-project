@@ -13,9 +13,7 @@ import {
   DragOverlay,
   defaultDropAnimationSideEffects,
   closestCorners,
-  rectIntersection,
   getFirstCollision,
-  closestCenter,
   pointerWithin,
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
@@ -339,19 +337,22 @@ function BoardContent({ board }) {
 
       // find the intersection with pointer
       const pointerIntersections = pointerWithin(args);
+
+      // check the case we drag the card out of the table
+      if (!pointerIntersections?.length) return;
       // return the list of collisions
-      const intersections =
-        pointerIntersections?.length > 0
-          ? pointerIntersections
-          : rectIntersection(args);
-      // find the first intersection
-      let overId = getFirstCollision(intersections, "id");
+      // const intersections =
+      //   pointerIntersections?.length > 0
+      //     ? pointerIntersections
+      //     : rectIntersection(args);
+      // find the first pointerIntersections
+      let overId = getFirstCollision(pointerIntersections, "id");
       if (overId) {
         const checkColumn = orderedColumns.find(
           (column) => column._id === overId
         );
         if (checkColumn) {
-          overId = closestCenter({
+          overId = closestCorners({
             ...args,
             droppableContainers: args.droppableContainers.filter(
               (container) =>
