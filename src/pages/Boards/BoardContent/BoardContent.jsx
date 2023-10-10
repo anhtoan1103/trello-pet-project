@@ -18,7 +18,8 @@ import {
 } from "@dnd-kit/core";
 import { arrayMove } from "@dnd-kit/sortable";
 import { useCallback, useEffect, useRef, useState } from "react";
-import { cloneDeep } from "lodash";
+import { cloneDeep, isEmpty } from "lodash";
+import { generatePlaceholderCard } from "~/utils/formatters";
 
 import Column from "./ListColumns/Column/Column";
 import Card from "./ListColumns/Column/ListCards/Card/Card";
@@ -116,6 +117,11 @@ function BoardContent({ board }) {
         nextActiveColumn.cards = nextActiveColumn.cards.filter(
           (card) => card._id !== activeDraggingCardId
         );
+
+        // add placeholder card if the column is empty
+        if (isEmpty(nextActiveColumn.cards)) {
+          nextActiveColumn.cards = [generatePlaceholderCard(nextActiveColumn)];
+        }
         // update the cardOrderIds
         nextActiveColumn.cardOrderIds = nextActiveColumn.cards.map(
           (card) => card._id
@@ -141,17 +147,15 @@ function BoardContent({ board }) {
           rebuild_activeDraggingCardData
         );
 
+        // delete PlaceholderCard if the column is not empty
+        nextOverColumn.cards = nextOverColumn.cards.filter(
+          (card) => !card.FE_PlaceholderCard
+        );
         // update the cardOrderIds
         nextOverColumn.cardOrderIds = nextOverColumn.cards.map(
           (card) => card._id
         );
       }
-      console.log("nextOverColumn.cards: ", nextOverColumn.cards);
-      console.log(
-        "nextOverColumn.columnOrderIds: ",
-        nextOverColumn.columnOrderIds
-      );
-      console.log("nextColumns: ", nextColumns);
 
       return nextColumns;
     });
@@ -354,12 +358,12 @@ function BoardContent({ board }) {
         if (checkColumn) {
           overId = closestCorners({
             ...args,
-            droppableContainers: args.droppableContainers.filter(
+            droppableContainers: args?.droppableContainers?.filter(
               (container) =>
                 container.id !== overId &&
                 checkColumn?.cardOrderIds?.includes(container.id)
-            )[0]?.id,
-          });
+            ),
+          })[0]?.id;
         }
 
         lastOverId.current = overId;
